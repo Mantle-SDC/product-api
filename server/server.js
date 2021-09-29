@@ -1,7 +1,5 @@
 const express = require('express');
-const path = require('path');
-const db = require('../database/index.js');
-var bodyParser = require('body-parser');
+const db = require('../db');
 
 const PORT = 3000;
 const app = express();
@@ -14,12 +12,12 @@ app.get('/products', (req, res) => {
       res.send('there was an error getting the list of products!');
     } else {
       res.status(200);
-      console.log('Successfully got a list of products!')
-      res.send('Hello from the server!');
+      console.log('Successfully got a list of products!');
+      res.send('Hello from the server!', result);
     }
-  })
+  });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server listening at localhost:${PORT}!`);
+  console.log(`Server listening at http://localhost:${PORT}!`);
 });
