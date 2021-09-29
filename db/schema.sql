@@ -1,48 +1,61 @@
-CREATE DATABASE IF NOT EXISTS mantle-product;
+DROP DATABASE IF EXISTS mantle_product;
 
-USE mantle-product;
+CREATE DATABASE IF NOT EXISTS mantle_product;
+
+USE mantle_product;
 
 CREATE TABLE products (
   id INT NOT NULL AUTO_INCREMENT,
   name TEXT NOT NULL,
   slogan TEXT NOT NULL,
   description TEXT NOT NULL,
-  default-price INT NOT NULL,
+  default_price INT NOT NULL,
   PRIMARY KEY (id)
 );
 
-CREATE TABLE product-features (
+CREATE TABLE features (
   id INT NOT NULL AUTO_INCREMENT,
+  product_id INT NOT NULL,
   feature TEXT NOT NULL,
   value TEXT NOT NULL,
   PRIMARY KEY (id)
 );
 
-CREATE TABLE product-styles (
+CREATE TABLE styles (
   id INT NOT NULL AUTO_INCREMENT,
+  product_id INT NOT NULL,
   name TEXT NOT NULL,
-  original-price INT NOT NULL,
-  sale-price INT,
-  default Boolean NOT NULL,
+  original_price INT NOT NULL,
+  sale_price INT,
+  default_style BIT NOT NULL,
   PRIMARY KEY (id)
 );
 
-CREATE TABLE product-category (
+CREATE TABLE categories (
   id INT NOT NULL AUTO_INCREMENT,
+  product_id INT NOT NULL,
   name TEXT NOT NULL,
   PRIMARY KEY (id)
 );
 
-CREATE TABLE style-photos (
+CREATE TABLE photos (
   id INT NOT NULL AUTO_INCREMENT,
-  thumbnailurl TEXT NOT NULL,
+  style_id INT NOT NULL,
+  thumbnail_url TEXT NOT NULL,
   url TEXT NOT NULL,
   PRIMARY KEY (id)
 );
 
-CREATE TABLE style-skus (
+CREATE TABLE skus (
   id INT NOT NULL AUTO_INCREMENT,
+  style_id INT NOT NULL,
   quantity INT NOT NULL,
   size TEXT NOT NULL,
   PRIMARY KEY (id)
 );
+
+ALTER TABLE features ADD FOREIGN KEY (product_id) REFERENCES products (id);
+ALTER TABLE styles ADD FOREIGN KEY (product_id) REFERENCES products (id);
+ALTER TABLE categories ADD FOREIGN KEY (product_id) REFERENCES products (id);
+ALTER TABLE photos ADD FOREIGN KEY (style_id) REFERENCES styles (id);
+ALTER TABLE skus ADD FOREIGN KEY (style_id) REFERENCES styles (id);
