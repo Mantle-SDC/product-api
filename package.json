@@ -2,7 +2,7 @@
   "name": "system-design-capstone",
   "version": "1.0.0",
   "description": "SDC-products",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest",
     "server": "nodemon ./server/server.js"
