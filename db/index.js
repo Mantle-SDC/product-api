@@ -4,7 +4,7 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'mantle-product',
+  database: 'mantle_product',
 });
 
 connection.connect((err) => {
@@ -15,4 +15,4 @@ connection.connect((err) => {
   }
 });
 
-export default connection;
+module.exports = connection;

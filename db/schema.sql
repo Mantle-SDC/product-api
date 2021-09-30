@@ -9,6 +9,7 @@ CREATE TABLE products (
   name TEXT NOT NULL,
   slogan TEXT NOT NULL,
   description TEXT NOT NULL,
+  category_id INT NOT null,
   default_price INT NOT NULL,
   PRIMARY KEY (id)
 );
@@ -33,7 +34,6 @@ CREATE TABLE styles (
 
 CREATE TABLE categories (
   id INT NOT NULL AUTO_INCREMENT,
-  product_id INT NOT NULL,
   name TEXT NOT NULL,
   PRIMARY KEY (id)
 );
@@ -56,6 +56,6 @@ CREATE TABLE skus (
 
 ALTER TABLE features ADD FOREIGN KEY (product_id) REFERENCES products (id);
 ALTER TABLE styles ADD FOREIGN KEY (product_id) REFERENCES products (id);
-ALTER TABLE categories ADD FOREIGN KEY (product_id) REFERENCES products (id);
+ALTER TABLE products ADD FOREIGN KEY (category_id) REFERENCES categories (id);
 ALTER TABLE photos ADD FOREIGN KEY (style_id) REFERENCES styles (id);
 ALTER TABLE skus ADD FOREIGN KEY (style_id) REFERENCES styles (id);

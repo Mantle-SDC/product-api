@@ -5,7 +5,9 @@ const PORT = 3000;
 const app = express();
 
 app.get('/products', (req, res) => {
-  db.list((err, result) => {
+  const sqlString = 'SELECT * FROM products';
+
+  db.query(sqlString, (err, result) => {
     if (err) {
       res.status(500);
       console.log('error', err);
@@ -13,7 +15,7 @@ app.get('/products', (req, res) => {
     } else {
       res.status(200);
       console.log('Successfully got a list of products!');
-      res.send('Hello from the server!', result);
+      res.send(`Hello from the server!${result}`);
     }
   });
 });
