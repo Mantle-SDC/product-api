@@ -30,7 +30,7 @@ CREATE TABLE styles (
   name TEXT NOT NULL,
   sale_price INT,
   original_price INT NOT NULL,
-  default_style BIT(1) NOT NULL,
+  default_style BOOLEAN NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -70,8 +70,8 @@ ALTER TABLE skus ADD FOREIGN KEY (style_id) REFERENCES styles (id);
 -- ENCLOSED BY '"'
 -- LINES TERMINATED BY '\n'
 -- IGNORE 1 LINES
--- (id, product_id, name, sale_price, original_price, @default_style)
--- SET default_style = CAST(@default_style AS UNSIGNED)
+-- -- (id, product_id, name, sale_price, original_price, @default_style)
+-- -- SET default_style = CAST(@default_style AS UNSIGNED)
 -- ;
 
 -- LOAD DATA LOCAL INFILE './data/skus.csv'
