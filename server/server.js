@@ -21,18 +21,34 @@ app.get('/products', (req, res) => {
 });
 
 app.get('/products/:product_id', (req, res) => {
-  const sqlString = 'SELECT * FROM products WHERE id = ?';
+  const sqlString = 'SELECT p.id, p.name, slogan, description, category, default_price, '
+  + 'JSON_ARRAYAGG(JSON_OBJECT("feature", feature, "value", value)) AS features '
+  + 'FROM products AS p '
+  + 'JOIN features AS f ON p.id = f.product_id '
+  + 'WHERE p.id = ? '
+  + 'GROUP BY id, name, slogan, description, category, default_price';
   const values = [req.params.product_id];
 
-  db.query(sqlString, values, (err, dbProduct) => {
+  db.query(sqlString, values, (err, dbProducts) => {
     if (err) {
       res.status(500);
       console.log('error', err);
       res.send('there was an error getting the product!');
     } else {
+      const dbProduct = dbProducts[0];
+      console.log(dbProduct);
+      const apiProduct = {
+        id: dbProduct.id,
+        name: dbProduct.name,
+        slogan: dbProduct.slogan,
+        description: dbProduct.description,
+        category: dbProduct.category,
+        default_price: dbProduct.default_price,
+        features: JSON.parse(dbProduct.features),
+      };
       res.status(200);
       console.log(`Successfully got product with id = ${req.params.product_id}`);
-      res.json(dbProduct);
+      res.json(apiProduct);
     }
   });
 });
