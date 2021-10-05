@@ -14,7 +14,7 @@ app.get('/products', (req, res) => {
       res.send('there was an error getting the list of products!');
     } else {
       res.status(200);
-      console.log('Successfully got a list of products!');
+      // console.log('Successfully got a list of products!');
       res.json(dbProducts);
     }
   });
@@ -28,6 +28,7 @@ app.get('/products/:product_id', (req, res) => {
   + 'WHERE p.id = ? '
   + 'GROUP BY id, name, slogan, description, category, default_price';
   const values = [req.params.product_id];
+  // console.log(sqlString);
 
   db.query(sqlString, values, (err, dbProducts) => {
     if (err) {
@@ -36,7 +37,7 @@ app.get('/products/:product_id', (req, res) => {
       res.send('there was an error getting the product!');
     } else {
       const dbProduct = dbProducts[0];
-      console.log(dbProduct);
+      // console.log(dbProduct);
       const apiProduct = {
         id: dbProduct.id,
         name: dbProduct.name,
@@ -47,7 +48,7 @@ app.get('/products/:product_id', (req, res) => {
         features: JSON.parse(dbProduct.features),
       };
       res.status(200);
-      console.log(`Successfully got product with id = ${req.params.product_id}`);
+      // console.log(`Successfully got product with id = ${req.params.product_id}`);
       res.json(apiProduct);
     }
   });
@@ -62,8 +63,8 @@ app.get('/products/:product_id/styles', (req, res) => {
     + 'JOIN photos AS p ON s.id = p.style_id '
     + 'WHERE product_id = ? '
     + 'GROUP BY style_id, name, original_price, sale_price, default_style';
-  console.log(sqlString);
   const values = [req.params.product_id];
+  // console.log(sqlString);
 
   db.query(sqlString, values, (err, dbStyles) => {
     if (err) {
@@ -71,7 +72,7 @@ app.get('/products/:product_id/styles', (req, res) => {
       console.log('error', err);
       res.send('there was an error getting the list of styles!');
     } else {
-      console.log(dbStyles);
+      // console.log(dbStyles);
       const apiStyles = {
         product_id: req.params.product_id,
         results: dbStyles.map((style) => ({
@@ -85,7 +86,7 @@ app.get('/products/:product_id/styles', (req, res) => {
         })),
       };
       res.status(200);
-      console.log(`Successfully got a list of styles with product id = ${req.params.product_id}`);
+      // console.log(`Successfully got list of styles with product id = ${req.params.product_id}`);
       res.json(apiStyles);
     }
   });
