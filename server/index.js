@@ -38,18 +38,9 @@ app.get('/products/:product_id', (req, res) => {
     } else {
       const dbProduct = dbProducts[0];
       // console.log(dbProduct);
-      const apiProduct = {
-        id: dbProduct.id,
-        name: dbProduct.name,
-        slogan: dbProduct.slogan,
-        description: dbProduct.description,
-        category: dbProduct.category,
-        default_price: dbProduct.default_price,
-        features: JSON.parse(dbProduct.features),
-      };
       res.status(200);
       // console.log(`Successfully got product with id = ${req.params.product_id}`);
-      res.json(apiProduct);
+      res.json(dbProduct);
     }
   });
 });
@@ -81,8 +72,8 @@ app.get('/products/:product_id/styles', (req, res) => {
           original_price: style.original_price,
           sale_price: style.sale_price,
           'default?': style.default_style === 1,
-          photos: JSON.parse(style.photos),
-          skus: JSON.parse(style.skus),
+          photos: style.photos,
+          skus: style.skus,
         })),
       };
       res.status(200);
